@@ -11,4 +11,4 @@ My collection of some ideas for improvements or fixes that need addressing.
 
 ## Enhancements
 
-1. [Enhancement] - Consume maps with multiple entry points and exit points and report the shortest path between each pair of entry and exit points
+1. [Enhancement] - Consume maps with multiple entry points and exit points and report the shortest path between each pair of entry and exit point
