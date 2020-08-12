@@ -2,7 +2,7 @@ from solver.vertex import Vertex
 from solver.pattern import Pattern
 from collections import deque
 from typing import List, Tuple, Optional
-import numpy as np
+from numpy import full
 
 
 class Maze:
@@ -11,9 +11,9 @@ class Maze:
     ) -> None:
         self.wall = wall_char
         self.entry = entry_char
-        self.data = data
+        self.data = data  # store the raw input
         # Initialize an empty matrix
-        self.matrix = np.full((len(data), len(data[0])), None)
+        self.matrix = full((len(data), len(data[0])), None)
         for row in range(len(data)):
             for col in range(len(data[0])):
                 self.matrix[row][col] = Vertex(col=col, row=row, data=data[row][col])
@@ -104,9 +104,9 @@ class Maze:
         return distance
 
     def find_path(self, source: Vertex, destination: Vertex) -> Tuple[bool, str]:
-
+        # reset the maze matrix if we already have a result
         if len(self.path) > 0:
-            return True, f"Path Found of length: {len(self.path)}"
+            self.reset()
 
         current_node = source
         current_node.d = 0
@@ -140,56 +140,12 @@ class Maze:
             self.path.appendleft(current_node)
             current_node = current_node.parent if current_node.parent else None
 
-        return True, f"Path Found of length: {len(self.path)}"
+        return True, f"Path Found of length: {self.path[-1].d}"
 
     def generate_output(self, path: deque = None) -> list:
-        matrix = np.full((len(self.data), len(self.data[0])), "_")
+        matrix = full((len(self.data), len(self.data[0])), "_")
         if not path:
             path = self.path
         for entry in path:
             matrix[entry.row][entry.col] = entry.data
         return matrix
-
-
-def read_input(path: str) -> list:
-    with open(path, "r") as file:
-        data = file.read()
-    return data.split("\n")
-
-
-def write_output(data: list, path: str) -> None:
-    with open(path, "w") as file:
-        for line in data:
-            file.write(f"{''.join(line)}\n")
-
-
-def run(input_path: str, output_path: str) -> None:
-    input = read_input(input_path)
-    entry_char = input[0]
-    wall_char = input[1]
-    pattern = Pattern(input[2])
-    map_data = input[3:]
-    maze = Maze(
-        entry_char=entry_char, wall_char=wall_char, data=map_data, pattern=pattern
-    )
-
-    try:
-        source, destination = maze.find_entry_points()
-    except ValueError:
-        print("Maze has no entry/exit points")
-        return
-
-    print(
-        f"Finding path in maze shape of (rows, cols):{maze.shape}, using path pattern: '{pattern}' ..."
-    )
-    success, msg = maze.find_path(source=source, destination=destination)
-    print(msg)
-
-    if success:
-        map_data = maze.generate_output()
-        write_output(data=map_data, path=output_path)
-
-        for line in map_data:
-            print(f"{''.join(line)}")
-
-        print(f"Results written to {output_path}")
