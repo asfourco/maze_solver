@@ -7,18 +7,18 @@ Python maze solver using Dikstra's algorithm to find the shortest and viable pat
 For example, given the following maze:
 
 ```shell
-A B A A A A A A A A A A
-A C A D D E A C C C D A
-A C C D A E A D A D A A
-A A A A A E D D A D E A
-A C C D D D A A A A E A
-A C A A A A A D D D E A
-A D D D E E A C A A A A
-A A A E A E A C C D D A
-A D E E A D A A A A A A
-A A D A A D A C D D A A
-A D D D A D C C A D E B
-A A A A A A A A A A A A
+ABAAAAAAAAAA
+ACADDEACCCDA
+ACCDAEADADAA
+AAAAAEDDADEA
+ACCDDDAAAAEA
+ACAAAAADDDEA
+ADDDEEACAAAA
+AAAEAEACCDDA
+ADEEADAAAAAA
+AADAADACDDAA
+ADDDADCCADEB
+AAAAAAAAAAAA
 ```
 
 Find a path using the following pattern `CCC-DDD-EEE-DDD`.
@@ -36,6 +36,35 @@ Find a path using the following pattern `CCC-DDD-EEE-DDD`.
 4. Install dependencies: `pipenv install`
 
 ## Usage
+
+### Input file format
+
+The following is the input format of the maze:
+
+1. The first line is the character representing the Entry and Exit of the maze.
+1. The second line is the character representing the Wall within the maze
+1. The third line is the character path pattern the solver should use
+1. The rest of the lines represent the maze itself
+
+For example, to represent the above maze, the input file `input.txt` would be:
+
+```txt
+B
+A
+CCCDDDEEEDDD
+ABAAAAAAAAAA
+ACADDEACCCDA
+ACCDAEADADAA
+AAAAAEDDADEA
+ACCDDDAAAAEA
+ACAAAAADDDEA
+ADDDEEACAAAA
+AAAEAEACCDDA
+ADEEADAAAAAA
+AADAADACDDAA
+ADDDADCCADEB
+AAAAAAAAAAAA
+```
 
 ## Contributing
 

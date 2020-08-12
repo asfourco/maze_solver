@@ -11,6 +11,7 @@ bandit = "*"
 black = "*"
 pre-commit = "*"
 mypy = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.8"
